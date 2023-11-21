@@ -2,10 +2,18 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 with open('3.txt') as file:
-    data = np.array(list(map(float, file.readlines())))  # массив начальных данных
+    # data = np.array(list(map(float, file.readlines())))  # массив начальных данных
+    data = np.loadtxt(file, dtype=float)
     A = np.identity(np.size(data))  # единичная матрица A, размер которой = размер массива data
-    for i in range(np.size(data)):
-        A[i, i - 1] = -1  # заполнение матрицы -1 под главной диагональю
+
+    A[np.arange(np.size(data)), np.roll(np.arange(np.size(data)), 1)] = -1
+    # Функция np.arange() = создание массива индексов от 0 до np.size(data) - 1
+    # который представляет собой диагональные индексы в матрице A.
+    # Функция np.roll() = сдвиг массива индексов на одну позицию влево (1).
+    # В полученный сдвинутый массив индексов устанавливаем значение -1.
+
+    # for i in range(np.size(data)):
+    #     A[i, i - 1] = -1  # заполнение матрицы -1 под главной диагональю
 
     fig, ax = plt.subplots()
     while(1):  # бесконечный цикл
